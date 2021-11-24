@@ -1,0 +1,275 @@
+.banner{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.column {
+    float: left;
+    width: 25%;
+    display: inline-block;
+    background:blue;
+    margin:10px 0 0 10px;
+    flex-grow: 1;
+    height:100px;    
+    width: calc(100% * (1/4) - 10px - 1px)
+}
+
+.row {
+    margin: 10 -5px;
+    width: 80%;
+}
+.item-card{
+    width: 85%;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+@media screen and (max-width: 800px) {
+    .column {
+        width: 100%;
+        margin-bottom: 00px;
+
+    }
+}
+
+.card {
+    border-color: transparent;
+    background-color: transparent;
+    opacity: 1.0;
+    text-align: center;
+    max-width: 350px;
+    margin: 5% 7%;
+}
+
+
+
+.frontcard,.backcard{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    backface-visibility: hidden;
+    transition: transform .6s linear;
+    left:0;
+    top:0;
+    overflow: hidden;
+    box-shadow: 2px 2px 30px rgba(0,0,0,2);
+    border-radius: 10px;
+}
+
+.frontcard{
+    transform: perspective(600px) rotateY(0deg);
+}
+
+.backcard{
+    position: absolute;
+    display: inline-grid;
+    align-content: center;
+    background: white;
+    transform: perspective(600px) rotateY(180deg);
+    transition: 1s;
+}
+
+.backcard a{
+    position: relative;
+    color: red;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 10px;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+.card button:hover {
+    opacity: 0.7;
+}
+
+.card:hover > .frontcard{
+    transform: perspective(600px) rotateY(-180deg);
+    z-index: 10;
+}
+
+.card:hover > .backcard{
+    transform: perspective(600px) rotateY(0deg);
+    text-align: center;
+    z-index: 10;
+}
+
+.price {
+    color: grey;
+    font-size: 22px;
+}
+
+button {
+    background-color: chocolate;
+    color: white;
+    border:1px solid;
+    padding: 14px 20px;
+    margin: 10px 2px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+input.search[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    display: inline;
+}
+
+.searchimg{
+    max-width: 1%;
+}
+
+input.search[type=text]:hover {
+    inline-box-align: auto;
+    width: 50%;
+}
+
+.rightBt{
+    position: relative;
+    float:right;
+    text-align: right;
+    display: inline;
+}
+.welUser{
+    right: 0;
+}
+
+button:hover {
+    background-color:#2abdbd;
+    opacity: 0.8;
+}
+
+button:active {
+    position:relative;
+    top: 1.5px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 10px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 5px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+    box-sizing: content-box;
+    padding: 50px;
+}
+
+input[type=checkbox]{
+    width: auto;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s;
+    width: fit-content;
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+.tabcontent {
+    display: none;
+}
+.book{
+    display: inline-block;
+    width:33%;
+    height: auto;
+}
+
+.ccateTab{
+    width: 15%;
+}
+
+p{
+    margin: 0;
+}
+
+.looklikelink {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    font-family: arial, sans-serif;
+    color: #069;
+    width: fit-content;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.main-body{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.list-group-item text-white{
+    background: red;
+}
+
+body{
+    background: linear-gradient(to left, #8942a8, #bd382d);
+}
+
+
+.editContent{
+    width:80%;
+}
+#EditForm{
+    column-count: 0;
+}
+
+.cartRow{
+    width: 100%;
+}
+
+.modal-backdrop{
+    display: none;
+}
+
+.cartImg > img{
+    width: 250px;
+}
