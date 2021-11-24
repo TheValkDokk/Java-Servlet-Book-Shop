@@ -5,36 +5,48 @@
  */
 package controller;
 
+import dao.userDAO;
+import dao.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "LogoutController", urlPatterns = {"/logout"})
-public class LogoutController extends HttpServlet {
+@WebServlet(name = "CreateUserController", urlPatterns = {"/CreateUserController"})
+public class CreateUserController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(false);
-        session.invalidate();
-        request.getRequestDispatcher("/home").forward(request, response);
+        String f = request.getParameter("i");
+        String[] a = f.split("&");
+        for (int i = 0; i < a.length; i++) {
+            a[i] = a[i].substring(a[i].indexOf("=") + 1);
+        }
+        for (String s : a) {
+            System.out.println(s);
+        }
+        String userID = a[0];
+        String password = a[1];
+        String confirm = a[2];
+        String fullName = a[3];
+        String roleID = a[4];
+        String addr = a[5];
+        int phone = Integer.parseInt(a[6]);
+        userDAO dao = new userDAO();
+        userDTO user = new userDTO(userID, password, fullName, roleID, phone, addr);
+        try {
+            System.out.println(dao.insertUser(user));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        PrintWriter out = response.getWriter();
+        out.println("Account Created");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

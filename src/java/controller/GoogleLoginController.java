@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import dao.CartDTO;
+
 import dao.bookDAO;
-import dao.bookDTO;
+import dao.userDAO;
+import dao.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,40 +13,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "UpdateCartController", urlPatterns = {"/UpdateCartController"})
-public class UpdateCartController extends HttpServlet {
+/**
+ *
+ * @author Valk
+ */
+@WebServlet(name = "GoogleLoginController", urlPatterns = {"/GoogleLoginController"})
+public class GoogleLoginController extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        userDTO user;
+        
+        String id = request.getParameter("id");
         bookDAO dao = new bookDAO();
-        String id = request.getParameter("bookID");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        bookDTO book = dao.getBookbyID(id);
-        HttpSession session = request.getSession(false);
-        List<CartDTO> cartList = new ArrayList<>();
-        float total = 0 ;
-        cartList = (List<CartDTO>) session.getAttribute("CART_LIST");
-        if (quantity < 1) {
-            for (CartDTO o : cartList) {
-                if (o.getBookID().equalsIgnoreCase(id)) {
-                    cartList.remove(o);
-                }
+        userDAO uDao = new userDAO();
+
+        try {
+            if (!dao.checkGoogleLogin(id)) {
+                String name = request.getParameter("name");
+                user = new userDTO(id, "Default", name, "US", 0, "");
+                uDao.insertUser(user);
             }
-        }else{
-            total = book.getPrice() * quantity;
-            for (CartDTO o : cartList) {
-                if (o.getBookID().equalsIgnoreCase(id)) {
-                    o.setQuantity(quantity);
-                }
-            }
+            user = uDao.Login(id, "Default");
+            HttpSession session = request.getSession(false);
+            session.setAttribute("FULL_NAME", user.getName());
+            session.setAttribute("USER_ID", user.getId());
+            session.setAttribute("Google", user);
+            session.setAttribute("LOGIN_USER", user);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        session.setAttribute("CART_LIST", cartList);
-        session.setAttribute("TOTAL_PRICE", total);
-        PrintWriter out = response.getWriter();
-        for (CartDTO o : cartList) {
-                out.println(total);
-            }
+        request.getRequestDispatcher("/home").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

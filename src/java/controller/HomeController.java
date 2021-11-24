@@ -27,15 +27,6 @@ public class HomeController extends HttpServlet {
         bookDAO dao = new bookDAO();
         List<bookDTO> booklist = dao.listBook();
         List<CategoryDTO> catelist = dao.listCate();
-        try {
-            HttpSession session = request.getSession(false);
-            if (session.getAttribute("LOGIN_USER") != null) {
-                userDTO user = (userDTO) session.getAttribute("LOGIN_USER");
-                int orderID = dao.findUserOrder(user.getId());
-                request.getSession(true).setAttribute("OrderID", orderID);
-            }
-        } catch (Exception e) {
-        }
         request.getSession(true).setAttribute("CateList", catelist);
         request.getSession(true).setAttribute("BookList", booklist);
         request.getRequestDispatcher("welcome.jsp").forward(request, response);

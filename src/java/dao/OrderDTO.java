@@ -1,27 +1,32 @@
 package dao;
 
-import java.util.List;
-
 public class OrderDTO {
     private int id;
     private String userID;
-    private String bookList;
     private String devAddr;
     private String paymentCheck;
-    private int status;
+    private int total;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(int id, String userID, String bookList, String devAddr, String paymentCheck, int status) {
+    public OrderDTO(int id, String userID, String devAddr, String paymentCheck, int total) {
         this.id = id;
         this.userID = userID;
-        this.bookList = bookList;
         this.devAddr = devAddr;
         this.paymentCheck = paymentCheck;
-        this.status = status;
+        this.total = total;
     }
 
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    
     public String getPaymentCheck() {
         return paymentCheck;
     }
@@ -40,14 +45,6 @@ public class OrderDTO {
         this.devAddr = devAddr;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public int getId() {
         return id;
     }
@@ -62,17 +59,5 @@ public class OrderDTO {
 
     public void setUserID(String userID) {
         this.userID = userID;
-    }
-
-    public String getBookList() {
-        return bookList;
-    }
-
-    public void setBookList(String bookList) {
-        this.bookList = bookList;
-    }
-
-   
-    
-    
+    } 
 }

@@ -3,7 +3,6 @@
     height: auto;
     object-fit: cover;
 }
-
 .column {
     float: left;
     width: 25%;
@@ -11,16 +10,17 @@
     background:blue;
     margin:10px 0 0 10px;
     flex-grow: 1;
-    height:100px;    
+    height:100px;
     width: calc(100% * (1/4) - 10px - 1px)
 }
-
 .row {
     margin: 10 -5px;
     width: 80%;
 }
 .item-card{
-    width: 85%;
+    width: 125%;
+    display: inline-block;
+    padding-left: 1%;
 }
 .row:after {
     content: "";
@@ -31,10 +31,8 @@
     .column {
         width: 100%;
         margin-bottom: 00px;
-
     }
 }
-
 .card {
     border-color: transparent;
     background-color: transparent;
@@ -43,9 +41,6 @@
     max-width: 350px;
     margin: 5% 7%;
 }
-
-
-
 .frontcard,.backcard{
     width: 100%;
     height: 100%;
@@ -58,11 +53,9 @@
     box-shadow: 2px 2px 30px rgba(0,0,0,2);
     border-radius: 10px;
 }
-
 .frontcard{
     transform: perspective(600px) rotateY(0deg);
 }
-
 .backcard{
     position: absolute;
     display: inline-grid;
@@ -71,7 +64,6 @@
     transform: perspective(600px) rotateY(180deg);
     transition: 1s;
 }
-
 .backcard a{
     position: relative;
     color: red;
@@ -81,13 +73,11 @@
     letter-spacing: 1px;
     margin-right: 10px;
 }
-
 .card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .card button {
     border: none;
     outline: 0;
@@ -102,23 +92,19 @@
 .card button:hover {
     opacity: 0.7;
 }
-
 .card:hover > .frontcard{
     transform: perspective(600px) rotateY(-180deg);
     z-index: 10;
 }
-
 .card:hover > .backcard{
     transform: perspective(600px) rotateY(0deg);
     text-align: center;
     z-index: 10;
 }
-
 .price {
     color: grey;
     font-size: 22px;
 }
-
 button {
     background-color: chocolate;
     color: white;
@@ -128,23 +114,25 @@ button {
     cursor: pointer;
     width: fit-content;
 }
-
 input.search[type=text] {
     width: 130px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
     display: inline;
 }
-
 .searchimg{
     max-width: 1%;
 }
 
-input.search[type=text]:hover {
+input.search[type=text]:focus {
     inline-box-align: auto;
-    width: 50%;
+    width: 75%;
 }
 
+input.search[type=text]:hover {
+    inline-box-align: auto;
+    width: 75%;
+}
 .rightBt{
     position: relative;
     float:right;
@@ -154,58 +142,68 @@ input.search[type=text]:hover {
 .welUser{
     right: 0;
 }
-
 button:hover {
     background-color:#2abdbd;
     opacity: 0.8;
 }
-
 button:active {
     position:relative;
     top: 1.5px;
 }
-
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0,0,0);
+    /* Fallback color */
+    background-color: rgba(0,0,0,0.4);
+    /* Black w/ opacity */
     padding-top: 10px;
 }
-
 .modal-content {
     background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    margin: 5% auto 15% auto;
+    /* 5% from the top, 15% from the bottom and centered */
     border: 5px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
+    width: 50%;
+    /* Could be more or less, depending on screen size */
     box-sizing: content-box;
     padding: 50px;
 }
-
 input[type=checkbox]{
     width: auto;
 }
-
 .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s;
     width: fit-content;
 }
-
 @-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)} 
-    to {-webkit-transform: scale(1)}
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
 }
-
 @keyframes animatezoom {
-    from {transform: scale(0)} 
-    to {transform: scale(1)}
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
 }
 .tab {
     overflow: hidden;
@@ -217,59 +215,67 @@ input[type=checkbox]{
 }
 .book{
     display: inline-block;
-    width:33%;
+    width: 19%;
     height: auto;
 }
-
 .ccateTab{
     width: 15%;
 }
-
 p{
     margin: 0;
 }
-
-.looklikelink {
-    background: none!important;
-    border: none;
-    padding: 0!important;
-    font-family: arial, sans-serif;
-    color: #069;
-    width: fit-content;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
 .main-body{
     display:flex;
     justify-content: space-between;
     align-items: flex-start;
+    max-width: 100%;
 }
-
 .list-group-item text-white{
     background: red;
 }
-
 body{
     background: linear-gradient(to left, #8942a8, #bd382d);
 }
-
-
 .editContent{
     width:80%;
 }
 #EditForm{
     column-count: 0;
 }
-
 .cartRow{
     width: 100%;
 }
-
 .modal-backdrop{
     display: none;
 }
-
 .cartImg > img{
     width: 250px;
+}
+button{
+    appearance: none;
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    background-image: linear-gradient(to right, #CC2E5D,#FF5858);
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: 3px 3px rgba(0,0,0,0.4);
+    transition: 0.4s ease-out;
+    &:hover{
+        box-shadow: 6px 6px rgba(0,0,0,0.6);
+    }
+}
+.swiper-container {
+    width: 600px;
+    height: 300px;
+}
+.looklikelink{
+    max-width: 100%;
+}
+.loginGr{
+    display: block;
+    text-align: center;
+    width: 100%;
 }

@@ -13,8 +13,37 @@ public class bookDAO {
     ResultSet rs = null;
 
     public bookDAO() {
-    }    
-    
+    }
+
+    public boolean checkGoogleLogin(String id) {
+        try {
+            con = DBCon.getConnection();
+            String sql = "select userID from tblUsers where userID=?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, id);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return false;
+    }
+
     public void addCart(CartDTO cart) {
         try {
             con = DBCon.getConnection();
@@ -24,9 +53,40 @@ public class bookDAO {
             stm.setInt(1, cart.getId());
             stm.setString(2, cart.getBookID());
             stm.setInt(3, cart.getQuantity());
-            stm.setInt(3, cart.getOrderID());
+            stm.setInt(5, cart.getOrderID());
             stm.setFloat(4, cart.getPrice());
+            System.out.println(stm.executeUpdate());
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    public void viewCart(String id) {
+        try {
+            con = DBCon.getConnection();
+            String sql = "select A.orderID, A.total, A.userID, B.productID,B.price,B.quantity\n"
+                    + "from tblOrders A inner join tblOrderDetail B\n"
+                    + "on A.orderID = B.orderID "
+                    + "where A.orderID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1,id);
             rs = stm.executeQuery();
+            while (rs.next()){
+                
+            }
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -79,15 +139,15 @@ public class bookDAO {
     public void CreateOrder(OrderDTO order) {
         try {
             con = DBCon.getConnection();
-            String sql = "insert into tblOrders (orderID, userID, deliverAddr, paymentCheck, status)"
+            String sql = "insert into tblOrders (orderID, userID, deliverAddr, paymentCheck, total)"
                     + " values(?,?,?,?,?)";
             stm = con.prepareStatement(sql);
             stm.setInt(1, order.getId());
             stm.setString(2, order.getUserID());
             stm.setString(3, order.getDevAddr());
             stm.setString(4, order.getPaymentCheck());
-            stm.setInt(5, order.getStatus());
-            rs = stm.executeQuery();
+            stm.setInt(5, order.getTotal());
+            System.out.println(stm.executeUpdate());
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -104,33 +164,6 @@ public class bookDAO {
             } catch (Exception e) {
             }
         }
-    }
-
-    public void updateOrder(OrderDTO order) {
-//        try {
-//            con = DBCon.getConnection();
-//            String sql = "";
-//            stm = con.prepareStatement(sql);
-//            stm.setInt(1, order.getId());
-//            stm.setString(2, order.getUserID());
-//            stm.setString(3, order.getBookList());
-//            rs = stm.executeQuery();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//                if (stm != null) {
-//                    stm.close();
-//                }
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//        }
     }
 
     public OrderDTO getOrder() {
@@ -166,8 +199,9 @@ public class bookDAO {
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
-                if(rs.getString("userID").equalsIgnoreCase(id))
+                if (rs.getString("userID").equalsIgnoreCase(id)) {
                     uid = rs.getInt("orderID");
+                }
             }
         } catch (Exception e) {
         } finally {
@@ -220,10 +254,75 @@ public class bookDAO {
         return lastest;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         bookDAO dao = new bookDAO();
-        List<CategoryDTO> list = dao.listCate();
-        System.out.println(list);
+    }
+
+    //Buy the Book
+    public boolean reduceQuan(String id, int quan) {
+        try {
+            con = DBCon.getConnection();
+            String sql = "update tblProduct set quantity = quantity - ? where productID=?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, quan);
+            stm.setString(2, id);
+            System.out.println(stm.executeUpdate());
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    public List<String> checkQuan(List<String> ids) {
+        List<String> Result = new ArrayList<>();
+        try {
+            con = DBCon.getConnection();
+            for (String id : ids) {
+                String[] i = id.split("-");
+                int a = Integer.parseInt(i[1]);
+                String sql = "Select productID, quantity from tblProduct where productID=?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, i[0]);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int b = rs.getInt("quantity");
+                    if (b < a) {
+                        Result.add(rs.getString("productID"));
+                    } else {
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return Result;
     }
 
     public List<bookDTO> SearchByName(String Name) {

@@ -26,6 +26,7 @@ public class LoginController extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("FULL_NAME", user.getName());
                 session.setAttribute("LOGIN_USER", user);
+                session.setAttribute("USER_ID", user.getId());
             }
         } catch (Exception e) {
             log("Error at LoginServlet. Error code: "+e.toString());

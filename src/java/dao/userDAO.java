@@ -78,6 +78,7 @@ public class userDAO {
             }
         }return list;
     }
+    
     public boolean updateUser(userDTO user) throws SQLException{
         boolean check = false;
         Connection conn = null;
@@ -156,11 +157,11 @@ public class userDAO {
                 stm.setString(2, user.getName());
                 stm.setString(3, user.getPassword());
                 stm.setString(4, user.getRoleID());
-                stm.setString(5, user.getAddr());
-                stm.setInt(6, user.getPhone());
+                stm.setInt(5, user.getPhone());
+                stm.setString(6, user.getAddr());
                 check = stm.executeUpdate()>0;
             }
-        } catch (Exception e) {
+        } catch (Exception e) { System.out.println(e);
         }finally{
             if(stm!=null) stm.close();
             if(conn!=null) conn.close();

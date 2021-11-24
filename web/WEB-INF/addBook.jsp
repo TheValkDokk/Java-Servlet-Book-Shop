@@ -1,22 +1,20 @@
-<%-- 
-    Document   : addBook
-    Created on : Jun 23, 2021, 9:47:39 PM
-    Author     : Dokk
---%>
-
+<%@page import="dao.userDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <%
+        userDTO user = (userDTO) session.getAttribute("LOGIN_USER");
+        if (user == null || !user.getRoleID().equalsIgnoreCase("AD")) {
+    %>
+    <script>
+        window.location.replace("/BookShop/home");
+    </script>
+    <%
+    } else {
+    %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!--        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
         <jsp:useBean id="dao" class="dao.bookDAO"></jsp:useBean>
             <script>
                 $(document).ready(function () {
@@ -58,13 +56,13 @@
                     });
                 });
 
-
-
                 function loadEdit() {
                     $.ajaxSetup({
                         cache: false
                     });
+                    
                     var value = $('#EditForm').serialize();
+                    const o = $('#searval');
                     $.ajax({
                         url: "/BookShop/EditController",
                         type: "post", //send it through get method
@@ -74,6 +72,7 @@
                             row.innerHTML = data;
                             var f = document.getElementById("editedSpan");
                             f.innerHTML = "<a id='Edite' style='color:green'>Updated!</a>";
+                            searchByName('');
                         },
                         error: function (xhr) {
                         }
@@ -212,4 +211,7 @@
             </div>
         </div>
     </body>
+    <%
+        }
+    %>
 </html>

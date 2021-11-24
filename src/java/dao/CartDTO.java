@@ -7,30 +7,17 @@ public class CartDTO {
     private int quantity;
     private float price;
     private int orderID;
-    private bookDTO book;
 
     public CartDTO() {
     }
 
-    public CartDTO(int id, String bookID, int quantity, float price, int orderID, bookDTO book) {
+    public CartDTO(int id, String bookID, int quantity, float price, int orderID) {
         this.id = id;
         this.bookID = bookID;
         this.quantity = quantity;
         this.price = price;
         this.orderID = orderID;
-        this.book = book;
     }
-
-    public bookDTO getBook() {
-        return book;
-    }
-
-    public void setBook(bookDTO book) {
-        this.book = book;
-    }
-
-    
-    
 
     public int getOrderID() {
         return orderID;
